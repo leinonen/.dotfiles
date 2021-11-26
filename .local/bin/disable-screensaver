@@ -1,5 +1,0 @@
-#!/bin/bash
-DISPLAY=:1
-xset s off
-xset s noblank
-xset -dpms
