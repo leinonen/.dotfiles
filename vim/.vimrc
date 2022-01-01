@@ -55,5 +55,10 @@ let mapleader = ","
 map <leader>f :FZF<CR>
 
 
+" for command mode
+nnoremap <S-Tab> <<
+" for insert mode
+inoremap <S-Tab> <C-d>
+
 " let $FZF_DEFAULT_COMMAND='find . ! -path "*node_modules*" ! -path "*.git/*" | fzf'
 
