@@ -24,7 +24,6 @@ set shiftwidth=4
 set expandtab
 set smartindent
 set visualbell
-set background=dark
 
 colorscheme gruvbox
 
