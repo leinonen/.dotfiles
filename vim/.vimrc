@@ -13,7 +13,7 @@ let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 
 "set textwidth=80
-set background=dark
+"set background=dark
 set number
 set relativenumber
 set scrolloff=8
