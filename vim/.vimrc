@@ -1,10 +1,8 @@
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-airline/vim-airline'
-Plug 'morhetz/gruvbox'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/goyo.vim'
-"Plug 'junegunn/limelight.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -25,7 +23,7 @@ set expandtab
 set smartindent
 set visualbell
 
-colorscheme gruvbox
+colorscheme peachpuff
 
 " --- Conqueror of Completion --
 " use <tab> for trigger completion and navigate to the next complete item
@@ -52,12 +50,4 @@ let mapleader = ","
 
 " ,f triggers fzf
 map <leader>f :FZF<CR>
-
-
-" for command mode
-nnoremap <S-Tab> <<
-" for insert mode
-inoremap <S-Tab> <C-d>
-
-" let $FZF_DEFAULT_COMMAND='find . ! -path "*node_modules*" ! -path "*.git/*" | fzf'
 
