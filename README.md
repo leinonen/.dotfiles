@@ -14,5 +14,9 @@ stow tmux
 ## neovim
 ```sh
 stow -t ~ nvim
+nvim --headless "+Lazy! sync" +qa
 ```
 
+### Neovim requirements
+- Neovim 0.11+
+- `git`, `go`, `gopls`, `gofumpt`
