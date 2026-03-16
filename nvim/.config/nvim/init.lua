@@ -1,3 +1,5 @@
+-- luacheck: globals vim
+---@diagnostic disable: undefined-global
 -- Neovim 0.11+ single-file config focused on Go development
 
 vim.g.mapleader = ' '
