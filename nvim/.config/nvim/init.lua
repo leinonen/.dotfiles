@@ -13,6 +13,8 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 8
 vim.opt.clipboard = "unnamedplus"
 
+vim.cmd.colorscheme("retrobox")
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -24,71 +26,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
--- Colorscheme with light/dark variants
-{ 
-  "rebelot/kanagawa.nvim", 
-  priority = 1000,
-  config = function()
-    require("kanagawa").setup({
-      compile = false,
-      undercurl = true,
-      commentStyle = { italic = true },
-      functionStyle = {},
-      keywordStyle = { italic = true },
-      statementStyle = { bold = true },
-      transparent = false,
-      dimInactive = false,
-      terminalColors = true,
-      theme = "wave",  -- Load all themes
-    })
-    
-    -- Set default colorscheme
-    vim.cmd("colorscheme kanagawa-wave")
-  end,
-},
- {
-  "akinsho/toggleterm.nvim",
-  version = "*",
-  config = function()
-    require("toggleterm").setup({
-      size = 15,
-      open_mapping = [[<leader>t]],
-      hide_numbers = true,
-      shade_terminals = true,
-      shading_factor = 2,
-      start_in_insert = true,
-      insert_mappings = true,
-      terminal_mappings = true,
-      persist_size = true,
-      persist_mode = true,
-      direction = "horizontal", -- 'vertical' | 'horizontal' | 'tab' | 'float'
-      close_on_exit = true,
-      shell = vim.o.shell,
-      float_opts = {
-        border = "curved",
-        winblend = 0,
-      },
-    })
-
-    -- Custom terminal navigation
-    function _G.set_terminal_keymaps()
-      local opts = {buffer = 0}
-      vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-      vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-      vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-      vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-      vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-    end
-
-    vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-
-    -- Additional terminal keybindings
-    vim.keymap.set('n', '<leader>tf', '<cmd>ToggleTerm direction=float<cr>', 
-      { desc = "Floating terminal" })
-    vim.keymap.set('n', '<leader>tv', '<cmd>ToggleTerm direction=vertical size=80<cr>', 
-      { desc = "Vertical terminal" })
-  end,
-},
   {
     "ray-x/go.nvim",
     dependencies = {
@@ -111,6 +48,26 @@ require("lazy").setup({
     ft = {"go", "gomod"},
     build = ':lua require("go.install").update_all_sync()',
   },
+{
+  "mfussenegger/nvim-dap",
+  dependencies = {
+    "leoluz/nvim-dap-go",        -- Go-specific config
+    "rcarriga/nvim-dap-ui",      -- UI for debug panes
+    "nvim-neotest/nvim-nio",     -- required by dap-ui
+  },
+  config = function()
+    require("dap-go").setup()
+    require("dapui").setup()
+
+    local dap, dapui = require("dap"), require("dapui")
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+      dapui.open()
+    end
+    dap.listeners.before.event_terminated["dapui_config"] = function()
+      dapui.close()
+    end
+  end,
+},
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -141,24 +98,6 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 })
-
--- Theme toggle function (FOOLPROOF)
-_G.current_theme = "dark"
-
-_G.theme_toggle = function()
-  if _G.current_theme == "dark" then
-    vim.cmd("colorscheme kanagawa-lotus")
-    _G.current_theme = "light"
-    print("Switched to Kanagawa Lotus (light)")
-  else
-    vim.cmd("colorscheme kanagawa-wave")
-    _G.current_theme = "dark"
-    print("Switched to Kanagawa Wave (dark)")
-  end
-end
-
--- Theme toggle keybinding
-vim.keymap.set('n', '<leader>th', theme_toggle, { desc = "Toggle light/dark theme" })
 
 -- Configure diagnostics to show inline errors (NEW)
 vim.diagnostic.config({
@@ -243,6 +182,19 @@ local on_attach = function(client, bufnr)
   vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, 
     vim.tbl_extend("force", opts, { desc = "Signature help" }))
   
+  -- Debugging
+local map = vim.keymap.set
+map("n", "<F5>",  require("dap").continue)
+map("n", "<F10>", require("dap").step_over)
+map("n", "<F11>", require("dap").step_into)
+map("n", "<F12>", require("dap").step_out)
+map("n", "<leader>b",  require("dap").toggle_breakpoint)
+map("n", "<leader>B",  function()
+  require("dap").set_breakpoint(vim.fn.input("Condition: "))
+end)
+map("n", "<leader>dr", require("dap").repl.open)
+map("n", "<leader>dt", require("dap-go").debug_test)  -- debug the test under cursor
+
   -- Code actions
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, 
     vim.tbl_extend("force", opts, { desc = "Code action" }))
@@ -267,13 +219,13 @@ require('lspconfig').gopls.setup({
       staticcheck = true,
       gofumpt = true,
       hints = {
-        assignVariableTypes = true,
-        compositeLiteralFields = true,
-        compositeLiteralTypes = true,
+        assignVariableTypes = false,
+        compositeLiteralFields = false,
+        compositeLiteralTypes = false,
         constantValues = true,
-        functionTypeParameters = true,
-        parameterNames = true,
-        rangeVariableTypes = true,
+        functionTypeParameters = false,
+        parameterNames = false,
+        rangeVariableTypes = false,
       },
     },
   },
@@ -320,8 +272,5 @@ vim.keymap.set('n', '<leader>dc', ':GoDbgContinue<CR>', { desc = "Debug continue
 vim.keymap.set('n', '<leader>dn', ':GoDbgStep<CR>', { desc = "Debug step over" })
 vim.keymap.set('n', '<leader>di', ':GoDbgStepIn<CR>', { desc = "Debug step in" })
 vim.keymap.set('n', '<leader>do', ':GoDbgStepOut<CR>', { desc = "Debug step out" })
-
--- Theme toggle (NEW)
-vim.keymap.set('n', '<leader>th', theme_toggle, { desc = "Toggle light/dark theme" })
 
 vim.o.winborder = "rounded"
