@@ -27,6 +27,14 @@ require("lazy").setup({
   { "mfussenegger/nvim-dap" },
 })
 
+require("telescope").setup({
+  pickers = {
+    colorscheme = {
+      enable_preview = true,
+    },
+  },
+})
+
 -- Built-in LSP (Neovim 0.11+)
 vim.lsp.config("gopls", {
   cmd       = { "gopls" },
