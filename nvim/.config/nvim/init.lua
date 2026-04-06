@@ -10,8 +10,11 @@ o.tabstop        = 4
 o.shiftwidth     = 4
 o.expandtab      = false  -- Go uses real tabs
 o.termguicolors  = true
-vim.cmd.colorscheme("retrobox")
 o.completeopt    = { "menu", "menuone", "noselect" }
+
+vim.cmd.colorscheme("retrobox")
+
+require("statusline").setup()
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
