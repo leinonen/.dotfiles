@@ -1,0 +1,213 @@
+/**
+ * ef-dream rofi theme
+ * Based on ef-dream.nvim palette by Protesilaos Stavrou
+ * https://github.com/leinonen/ef-dream.nvim
+ */
+
+* {
+    /* Backgrounds */
+    bg-main:        #232025;
+    bg-dim:         #322f34;
+    bg-alt:         #3b393e;
+    bg-popup:       #2e2a31;
+    bg-hl-line:     #412f4f;
+    bg-completion:  #503240;
+    bg-region:      #544a50;
+
+    /* Foregrounds */
+    fg-main:        #efd5c5;
+    fg-dim:         #8f8886;
+    fg-alt:         #b0a0cf;
+
+    /* Accents */
+    border-col:     #635850;
+    cursor:         #f3c09a;
+    yellow-cooler:  #deb07a;
+    magenta:        #ffaacf;
+    cyan-warmer:    #8fcfd0;
+    red-cooler:     #e47980;
+    green-cooler:   #3fc489;
+
+    /* Urgency */
+    bg-err:         #501a2d;
+    bg-info:        #0f3f4f;
+
+    background-color: transparent;
+    text-color:       @fg-main;
+    font:             "JetBrainsMono Nerd Font 11";
+}
+
+window {
+    transparency:      "real";
+    location:          center;
+    anchor:            center;
+    fullscreen:        false;
+    width:             640px;
+    x-offset:          0px;
+    y-offset:          0px;
+
+    enabled:           true;
+    margin:            0px;
+    padding:           0px;
+    border:            1px solid;
+    border-radius:     8px;
+    border-color:      @border-col;
+    background-color:  @bg-main;
+}
+
+mainbox {
+    enabled:           true;
+    spacing:           0px;
+    margin:            0px;
+    padding:           16px;
+    border:            0px;
+    background-color:  transparent;
+    children:          [ "inputbar", "message", "listview" ];
+}
+
+inputbar {
+    enabled:           true;
+    spacing:           8px;
+    margin:            0px 0px 12px 0px;
+    padding:           10px 12px;
+    border:            0px 0px 1px 0px;
+    border-radius:     6px 6px 0px 0px;
+    border-color:      @border-col;
+    background-color:  @bg-popup;
+    text-color:        @fg-main;
+    children:          [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled:           true;
+    background-color:  transparent;
+    text-color:        @yellow-cooler;
+}
+
+entry {
+    enabled:           true;
+    background-color:  transparent;
+    text-color:        @fg-main;
+    cursor:            text;
+    placeholder:       "search...";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    enabled:           true;
+    columns:           1;
+    lines:             10;
+    cycle:             true;
+    dynamic:           true;
+    scrollbar:         false;
+    layout:            vertical;
+    reverse:           false;
+    fixed-height:      true;
+    fixed-columns:     true;
+
+    spacing:           2px;
+    margin:            0px;
+    padding:           4px 0px 0px 0px;
+    border:            0px;
+    background-color:  transparent;
+    text-color:        @fg-main;
+    cursor:            default;
+}
+
+element {
+    enabled:           true;
+    spacing:           10px;
+    margin:            0px;
+    padding:           8px 10px;
+    border:            0px;
+    border-radius:     4px;
+    background-color:  transparent;
+    text-color:        @fg-main;
+    cursor:            pointer;
+}
+
+element normal.normal {
+    background-color:  transparent;
+    text-color:        @fg-main;
+}
+
+element normal.urgent {
+    background-color:  @bg-err;
+    text-color:        @red-cooler;
+}
+
+element normal.active {
+    background-color:  @bg-info;
+    text-color:        @cyan-warmer;
+}
+
+element selected.normal {
+    background-color:  @bg-hl-line;
+    text-color:        @fg-main;
+}
+
+element selected.urgent {
+    background-color:  @bg-err;
+    text-color:        @magenta;
+}
+
+element selected.active {
+    background-color:  @bg-completion;
+    text-color:        @cursor;
+}
+
+element alternate.normal {
+    background-color:  transparent;
+    text-color:        @fg-main;
+}
+
+element alternate.urgent {
+    background-color:  @bg-err;
+    text-color:        @red-cooler;
+}
+
+element alternate.active {
+    background-color:  @bg-info;
+    text-color:        @cyan-warmer;
+}
+
+element-icon {
+    background-color:  transparent;
+    text-color:        inherit;
+    size:              18px;
+    cursor:            inherit;
+}
+
+element-text {
+    background-color:  transparent;
+    text-color:        inherit;
+    cursor:            inherit;
+    vertical-align:    0.5;
+    horizontal-align:  0.0;
+}
+
+message {
+    margin:            0px 0px 8px 0px;
+    padding:           0px;
+    border-radius:     4px;
+    background-color:  transparent;
+    text-color:        @fg-alt;
+}
+
+textbox {
+    padding:           8px 10px;
+    border-radius:     4px;
+    background-color:  @bg-dim;
+    text-color:        @fg-alt;
+    vertical-align:    0.5;
+    horizontal-align:  0.0;
+}
+
+error-message {
+    padding:           10px;
+    border:            1px solid;
+    border-radius:     4px;
+    border-color:      @red-cooler;
+    background-color:  @bg-err;
+    text-color:        @fg-main;
+}
