@@ -1,6 +1,9 @@
 {
+  "ef-dream.nvim": { "branch": "main", "commit": "e8821f9af8d1032c0dbbb6a949eb37c8714f0585" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
-  "nvim-dap": { "branch": "master", "commit": "a9d8cb68ee7184111dc66156c4a2ebabfbe01bc5" },
-  "plenary.nvim": { "branch": "master", "commit": "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
-  "telescope.nvim": { "branch": "master", "commit": "5255aa27c422de944791318024167ad5d40aad20" }
+  "mini.extra": { "branch": "main", "commit": "ffb7b3a726e059b011b3655f26e61ec6f7cf5b84" },
+  "mini.icons": { "branch": "main", "commit": "520995f1d75da0e4cc901ee95080b1ff2bc46b94" },
+  "mini.pick": { "branch": "main", "commit": "26f94e9c84f529d713de00b900c0a307ca260f35" },
+  "nvim-dap": { "branch": "master", "commit": "531771530d4f82ad2d21e436e3cc052d68d7aebb" },
+  "oil.nvim": { "branch": "master", "commit": "b91ee5a77a6a9605d9c1aaf4fda74b66082c8297" }
 }

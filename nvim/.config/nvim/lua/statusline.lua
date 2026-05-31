@@ -32,10 +32,10 @@ local function update_git_branch()
     return
   end
 
-  local head_file = git_dir .. "/HEAD"
-  local head = vim.fn.readfile(head_file)
+  local head_file = vim.fn.fnamemodify(git_dir, ":p") .. "HEAD"
+  local ok, head = pcall(vim.fn.readfile, head_file)
 
-  if vim.v.shell_error ~= 0 or #head == 0 then
+  if not ok or #head == 0 then
     cache.git_branch = ""
     return
   end
