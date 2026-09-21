@@ -1,0 +1,48 @@
+{
+  "plugins": {
+    "acidburn": {
+      "rev": "d9b98480a57146be508b5a8edff5757c6735c99d",
+      "src": "https://github.com/leinonen/acidburn"
+    },
+    "c64.nvim": {
+      "rev": "4b20e1f89b77e96cb8977165f9dd0f5c66611ccf",
+      "src": "file:///home/leinonen/code/c64.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "25050e4ed39e628282831d4cbecb1850454ce915",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "markdown-preview.nvim": {
+      "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
+      "src": "https://github.com/iamcco/markdown-preview.nvim"
+    },
+    "mini.extra": {
+      "rev": "eb21c1117207d3aa1ae532c666c692e94909087e",
+      "src": "https://github.com/echasnovski/mini.extra"
+    },
+    "mini.icons": {
+      "rev": "ac38c983aed0a2bd32a65ca3e2348e12e58ca292",
+      "src": "https://github.com/nvim-mini/mini.icons"
+    },
+    "mini.pick": {
+      "rev": "0b3599e6df730f3ced3359d33c674288de0d186d",
+      "src": "https://github.com/echasnovski/mini.pick"
+    },
+    "nvim-dap": {
+      "rev": "531771530d4f82ad2d21e436e3cc052d68d7aebb",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "oil.nvim": {
+      "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
+      "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
+      "src": "https://github.com/folke/snacks.nvim"
+    },
+    "zenburn.nvim": {
+      "rev": "f5ee12b30119499c7fa7f95719cd7c5aab9f9f29",
+      "src": "https://github.com/phha/zenburn.nvim"
+    }
+  }
+}
