@@ -1,0 +1,76 @@
+// Ported from polybar
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 32,
+    "spacing": 0,
+
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": [],
+    "modules-right": [
+        "disk", "pulseaudio", "custom/bluetooth", "sway/language",
+        "memory", "cpu", "network", "custom/battery", "tray", "clock"
+    ],
+
+    "sway/workspaces": {
+        "all-outputs": false,
+        "disable-scroll-wraparound": true,
+        "format": "{name}"
+    },
+    "sway/mode": { "format": "{}" },
+
+    "disk": {
+        "interval": 25,
+        "path": "/",
+        "format": "<span color='#F0DFAF'>{path}</span> {percentage_used}%"
+    },
+
+    "pulseaudio": {
+        "format": "<span color='#9dff4d'>VOL</span> {volume}%",
+        "format-muted": "<span color='#6b6b5f'>muted</span>",
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol",
+        "scroll-step": 5
+    },
+
+    "custom/bluetooth": {
+        "exec": "~/.config/waybar/scripts/bluetooth.sh",
+        "interval": 5,
+        "on-click": "blueman-manager"
+    },
+
+    "sway/language": {
+        "format": "<span color='#9dff4d'>{short}</span>"
+    },
+
+    "memory": {
+        "interval": 2,
+        "format": "<span color='#9dff4d'>RAM</span> {percentage:2}%"
+    },
+    "cpu": {
+        "interval": 2,
+        "format": "<span color='#9dff4d'>CPU</span> {usage:2}%"
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": "<span color='#F0DFAF'>{ifname}</span> {essid} {ipaddr}",
+        "format-ethernet": "<span color='#F0DFAF'>{ifname}</span> {ipaddr}",
+        "format-disconnected": "<span color='#F0DFAF'>{ifname}</span><span color='#7F7F7F'> disconnected</span>",
+        "on-click": "~/.config/waybar/scripts/wifi-menu.sh"
+    },
+
+    "custom/battery": {
+        "exec": "~/.config/waybar/scripts/battery.sh",
+        "restart-interval": 5
+    },
+
+    "tray": { "spacing": 16 },
+
+    "clock": {
+        "interval": 1,
+        "format": "<span color='#9dff4d'>{:%Y-%m-%d %H:%M}</span>",
+        "format-alt": "<span color='#9dff4d'>{:%Y-%m-%d %H:%M:%S}</span>",
+        "tooltip": false
+    }
+}
