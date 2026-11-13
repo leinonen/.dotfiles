@@ -1,6 +1,17 @@
 vim.diagnostic.config({
   virtual_text = { spacing = 2, prefix = "●" },
   severity_sort = true,
+  float = { border = "rounded", source = true, max_width = 100 },
+})
+
+-- virtual text truncates at window edge; float wraps, so show it on hold
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    -- don't replace an open hover/signature float (only one preview per buffer)
+    local win = vim.b.lsp_floating_preview
+    if win and vim.api.nvim_win_is_valid(win) then return end
+    vim.diagnostic.open_float(nil, { focus = false, scope = "cursor" })
+  end,
 })
 
 local web_ft = {
@@ -90,6 +101,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "<F1>",       b.hover)
     map("n", "<F2>",       b.rename)
     map("n", "<F3>",       b.references)
+    map("n", "<F4>",       b.document_symbol)
+    map("n", "<F5>",       b.workspace_symbol)
     map("n", "<leader>f",  function()
       b.format({ async = true, filter = function(c) return c.name ~= "tsgo" and c.name ~= "cssls" end })
     end)

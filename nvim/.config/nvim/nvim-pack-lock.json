@@ -12,6 +12,10 @@
       "rev": "25050e4ed39e628282831d4cbecb1850454ce915",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "html5.vim": {
+      "rev": "485f2cd62162c81e56d8604b4c630f0b5ef69d1f",
+      "src": "https://github.com/othree/html5.vim"
+    },
     "markdown-preview.nvim": {
       "rev": "a923f5fc5ba36a3b17e289dc35dc17f66d0548ee",
       "src": "https://github.com/iamcco/markdown-preview.nvim"
@@ -39,6 +43,14 @@
     "snacks.nvim": {
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
       "src": "https://github.com/folke/snacks.nvim"
+    },
+    "vim-javascript": {
+      "rev": "b26c9edb3563e02f5c0b20580f7cf9743e95b157",
+      "src": "https://github.com/pangloss/vim-javascript"
+    },
+    "vim-svelte": {
+      "rev": "f6df955ad86583e9751487eb7550fae9e53d2d6b",
+      "src": "https://github.com/evanleck/vim-svelte"
     },
     "zenburn.nvim": {
       "rev": "f5ee12b30119499c7fa7f95719cd7c5aab9f9f29",

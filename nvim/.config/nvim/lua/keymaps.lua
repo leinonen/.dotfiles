@@ -50,16 +50,16 @@ map("n", "<leader>tl", function()
 end, "go test func under cursor")
 
 -- debugger (nvim-dap)
-local dap = function(name)
-  return function() require("dap")[name]() end
-end
-
-map("n", "<F5>",       dap("continue"),          "Debug: continue")
-map("n", "<F10>",      dap("step_over"),         "Debug: step over")
-map("n", "<F11>",      dap("step_into"),         "Debug: step into")
-map("n", "<F12>",      dap("step_out"),          "Debug: step out")
-map("n", "<leader>db", dap("toggle_breakpoint"), "Debug: toggle breakpoint")
-map("n", "<leader>dr", function() require("dap").repl.open() end, "Debug: open REPL")
+-- local dap = function(name)
+--   return function() require("dap")[name]() end
+-- end
+--
+-- map("n", "<F5>",       dap("continue"),          "Debug: continue")
+-- map("n", "<F10>",      dap("step_over"),         "Debug: step over")
+-- map("n", "<F11>",      dap("step_into"),         "Debug: step into")
+-- map("n", "<F12>",      dap("step_out"),          "Debug: step out")
+-- map("n", "<leader>db", dap("toggle_breakpoint"), "Debug: toggle breakpoint")
+-- map("n", "<leader>dr", function() require("dap").repl.open() end, "Debug: open REPL")
 
 -- markdown
 map("n", "<leader>mp", "<Plug>MarkdownPreviewToggle", "Toggle Markdown preview")
