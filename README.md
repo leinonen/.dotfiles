@@ -21,3 +21,15 @@ sudo cp sway/.config/sway/sway-intel.desktop /usr/share/wayland-sessions/
 ```sh
 stow -t ~ waybar
 ```
+
+## kanshi
+```sh
+stow -t ~ kanshi
+```
+
+## bin
+Sway helper scripts (session launcher, lock screen, monitor toggle).
+`c64lock-sway` needs `~/.local/share/wallpapers/c64lock.py` and the C64 font.
+```sh
+stow -t ~ bin
+```

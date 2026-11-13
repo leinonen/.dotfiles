@@ -1,0 +1,24 @@
+#!/bin/bash
+# Sway version of ~/.local/bin/mon: toggle between external monitor and laptop panel.
+# kanshi already switches automatically on plug/unplug; this is the manual override.
+LAPTOP=eDP-1
+
+mapfile -t ext < <(swaymsg -t get_outputs -r | jq -r --arg l "$LAPTOP" '.[] | select(.name != $l) | .name')
+
+case ${#ext[@]} in
+    0) swaymsg output "$LAPTOP" enable; exit ;;
+    1) target="${ext[0]}" ;;
+    *) target=$(printf '%s\n' "${ext[@]}" | rofi -dmenu -p "monitor") ;;
+esac
+
+[ -z "$target" ] && exit
+
+# already on the external? go back to the laptop panel
+if swaymsg -t get_outputs -r | jq -e --arg t "$target" --arg l "$LAPTOP" \
+     'any(.[]; .name == $t and .active) and any(.[]; .name == $l and (.active | not))' >/dev/null; then
+    swaymsg output "$LAPTOP" enable
+    swaymsg output "$target" disable
+else
+    swaymsg output "$target" enable
+    swaymsg output "$LAPTOP" disable
+fi

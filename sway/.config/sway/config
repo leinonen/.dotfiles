@@ -40,9 +40,9 @@ bar {
     swaybar_command waybar
 }
 
-# Monitor profiles: start once, re-read its config on sway reload
-exec kanshi
-exec_always kanshictl reload
+# Monitor profiles: (re)start kanshi on every load/reload. One sh -c so the
+# pkill finishes before kanshi starts (Ubuntu's kanshi ships no kanshictl).
+exec_always sh -c 'pkill -x kanshi; exec kanshi'
 
 exec dex --autostart --environment sway
 

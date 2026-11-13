@@ -1,0 +1,9 @@
+#!/bin/sh
+# Sway version of c64lock: C64 boot-screen lock image sized to the focused output.
+res=$(swaymsg -t get_outputs -r | jq -r '[.[] | select(.active)] | (map(select(.focused)) + .)[0].current_mode | "\(.width)x\(.height)"')
+w=${res%x*}; h=${res#*x}
+img="$HOME/.cache/c64lock/lock-${w}x${h}.png"
+mkdir -p "$HOME/.cache/c64lock"
+[ -f "$img" ] || python3 "$HOME/.local/share/wallpapers/c64lock.py" "$w" "$h" "$img" >/dev/null
+# -f: daemonize, so swayidle's before-sleep waits until the lock is up
+exec swaylock -f -e -c 352879 -i "$img" "$@"

@@ -1,0 +1,15 @@
+# Ported from ~/.config/autorandr/{laptop,external}.
+# kanshi picks the profile whose outputs are all connected; most specific wins.
+# Output names come from: swaymsg -t get_outputs
+
+profile laptop {
+    output eDP-1 enable mode 1920x1200@60.03Hz position 0,0
+}
+
+# Any external monitor plugged in: use it alone, laptop panel off
+# (same as autorandr "external" profile and ~/.local/bin/mon).
+profile external {
+    output eDP-1 disable
+    # preferred mode; for your 2560x1440 screen that's what autorandr used
+    output * enable position 0,0
+}
