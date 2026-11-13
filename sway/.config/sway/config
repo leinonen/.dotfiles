@@ -65,7 +65,7 @@ floating_modifier $mod normal
 tiling_drag enable
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec x-terminal-emulator
 
 # kill focused window
 bindsym $mod+Shift+q kill

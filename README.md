@@ -12,7 +12,7 @@ stow -t ~ nvim
 
 ## Sway desktop (sway, waybar, kanshi, bin)
 
-Ubuntu 26.04 on an Intel + NVIDIA laptop. Replaces the old i3/polybar/picom/autorandr setup.
+Ubuntu 26.04 on an Intel + NVIDIA laptop. Replaced the old i3/polybar/picom/autorandr setup (now in `archive/i3-x11`).
 
 | Package | What |
 |---|---|
@@ -46,13 +46,11 @@ Log out, click the gear on the GDM password screen, pick **Sway (Intel)**.
 
 - `~/.local/share/wallpapers/c64lock.py`: generates the C64 lock image (needs `python3-pil`)
 - C64 font under `~/.local/share/fonts/c64/`, and ShureTechMono Nerd Font for waybar
-- `~/.config/polybar`, `~/.config/i3`: the old X11 setup, kept as a fallback
 
 ### Gotchas
 
 - **NVIDIA:** sway won't start while the proprietary `nvidia` module is loaded. `sway-session` passes `--unsupported-gpu` and sets `WLR_DRM_DEVICES` to the Intel card. All outputs (eDP-1, DP-1..4) are wired to Intel, so NVIDIA isn't needed for display.
 - **Stuck on the Ubuntu logo / sway "Permission denied" on /dev/dri:** a udev `RUN+=` script hung and blocked udev. Don't add udev hotplug scripts; kanshi handles monitors. Remove any leftover `/etc/udev/rules.d/95-autorandr.rules`.
-- **i3 fallback has no keyboard/mouse:** the upgrade removed the X input driver. `sudo apt install xorg xserver-xorg-input-libinput`.
 - **kanshi:** Ubuntu's package has no `kanshictl`. Sway restarts kanshi on every reload instead.
 - **Outputs wrong?** `swaymsg -t get_outputs` shows names; edit `kanshi/.config/kanshi/config`.
 - **No bar?** Run `waybar` in a terminal to see errors.

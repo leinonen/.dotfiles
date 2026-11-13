@@ -1,0 +1,8 @@
+#!/bin/sh
+# Lock screen with C64 boot-screen image sized to primary output.
+res=$(xrandr | awk '/ connected primary/ {print $4}' | cut -d+ -f1)
+[ -z "$res" ] && res=$(xrandr | awk '/ connected/ {print $3}' | grep -m1 x | cut -d+ -f1)
+w=${res%x*}; h=${res#*x}
+img="$HOME/.cache/c64lock/lock-${w}x${h}.png"
+[ -f "$img" ] || python3 "$HOME/.local/share/wallpapers/c64lock.py" "$w" "$h" "$img" >/dev/null
+exec i3lock -e -c 352879 -i "$img" "$@"

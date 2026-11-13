@@ -1,0 +1,26 @@
+#!/bin/bash
+# ~/.local/bin/mon-mirror
+LAPTOP=eDP-1
+
+mapfile -t ext < <(xrandr | awk '/ connected/ && $1 != "'"$LAPTOP"'" {print $1}')
+
+case ${#ext[@]} in
+    0) xrandr --output "$LAPTOP" --auto --primary ;;
+    1) target="${ext[0]}" ;;
+    *) target=$(printf '%s\n' "${ext[@]}" | fzf --prompt="monitor> ") ;;
+esac
+
+if [ -n "$target" ]; then
+    # pick highest resolution supported by both displays
+    laptop_modes=$(xrandr | awk "/^$LAPTOP /{found=1;next} found && /^\s/{print \$1} found && !/^\s/{exit}")
+    target_modes=$(xrandr | awk "/^$target /{found=1;next} found && /^\s/{print \$1} found && !/^\s/{exit}")
+    common=$(comm -12 <(echo "$laptop_modes" | sort) <(echo "$target_modes" | sort) | \
+             awk -F'x' '{print $1*$2, $0}' | sort -rn | head -1 | awk '{print $2}')
+    res=${common:-1920x1080}
+    xrandr --output "$LAPTOP" --mode "$res" --primary \
+           --output "$target" --mode "$res" --same-as "$LAPTOP"
+fi
+
+i3-msg restart >/dev/null
+
+feh --bg-scale ~/.local/share/wallpapers/hyper.ppm

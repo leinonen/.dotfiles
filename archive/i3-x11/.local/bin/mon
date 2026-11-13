@@ -1,0 +1,20 @@
+#!/bin/bash
+# ~/.local/bin/mon
+LAPTOP=eDP-1
+
+mapfile -t ext < <(xrandr | awk '/ connected/ && $1 != "'"$LAPTOP"'" {print $1}')
+
+case ${#ext[@]} in
+    0) xrandr --output "$LAPTOP" --auto --primary ;;
+    1) target="${ext[0]}" ;;
+    *) target=$(printf '%s\n' "${ext[@]}" | fzf --prompt="monitor> ") ;;
+esac
+
+if [ -n "$target" ]; then
+    xrandr --output "$target" --auto --primary --output "$LAPTOP" --off
+fi
+
+i3-msg restart >/dev/null
+
+feh --bg-scale ~/.local/share/wallpapers/hyper.ppm
+
