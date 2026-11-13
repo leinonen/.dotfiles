@@ -10,26 +10,49 @@ stow tmux
 stow -t ~ nvim
 ```
 
+## Sway desktop (sway, waybar, kanshi, bin)
 
-## sway
+Ubuntu 26.04 on an Intel + NVIDIA laptop. Replaces the old i3/polybar/picom/autorandr setup.
+
+| Package | What |
+|---|---|
+| `sway` | sway config, plus `sway-intel.desktop`, the GDM session file |
+| `waybar` | bar (polybar port) and its battery/bluetooth/wifi scripts |
+| `kanshi` | monitor profiles: laptop only, or external only with the panel off |
+| `bin` | `sway-session` (launcher), `c64lock-sway` (lock), `mon-sway` (Mod+Shift+p toggle) |
+
+### Install
+
 ```sh
-stow -t ~ sway
+sudo apt install sway swaybg swayidle swaylock waybar kanshi grim slurp wl-clipboard \
+    jq rofi foot dex network-manager-gnome blueman pavucontrol
+
+cd ~/.dotfiles
+stow -t ~ sway waybar kanshi bin
+
+# login entry that starts sway on the Intel GPU only
 sudo cp sway/.config/sway/sway-intel.desktop /usr/share/wayland-sessions/
+# hide the plain "Sway" entry, which can't start while the nvidia module is loaded
+sudo sh -c 'echo "Hidden=true" >> /usr/share/wayland-sessions/sway.desktop'
+
+sway -C   # validate config
 ```
 
-## waybar
-```sh
-stow -t ~ waybar
-```
+Log out, click the gear on the GDM password screen, pick **Sway (Intel)**.
 
-## kanshi
-```sh
-stow -t ~ kanshi
-```
+`sway-intel.desktop` hardcodes `/home/leinonen/.local/bin/sway-session`. Change the path if your username differs.
 
-## bin
-Sway helper scripts (session launcher, lock screen, monitor toggle).
-`c64lock-sway` needs `~/.local/share/wallpapers/c64lock.py` and the C64 font.
-```sh
-stow -t ~ bin
-```
+### Not in this repo
+
+- `~/.local/share/wallpapers/c64lock.py`: generates the C64 lock image (needs `python3-pil`)
+- C64 font under `~/.local/share/fonts/c64/`, and ShureTechMono Nerd Font for waybar
+- `~/.config/polybar`, `~/.config/i3`: the old X11 setup, kept as a fallback
+
+### Gotchas
+
+- **NVIDIA:** sway won't start while the proprietary `nvidia` module is loaded. `sway-session` passes `--unsupported-gpu` and sets `WLR_DRM_DEVICES` to the Intel card. All outputs (eDP-1, DP-1..4) are wired to Intel, so NVIDIA isn't needed for display.
+- **Stuck on the Ubuntu logo / sway "Permission denied" on /dev/dri:** a udev `RUN+=` script hung and blocked udev. Don't add udev hotplug scripts; kanshi handles monitors. Remove any leftover `/etc/udev/rules.d/95-autorandr.rules`.
+- **i3 fallback has no keyboard/mouse:** the upgrade removed the X input driver. `sudo apt install xorg xserver-xorg-input-libinput`.
+- **kanshi:** Ubuntu's package has no `kanshictl`. Sway restarts kanshi on every reload instead.
+- **Outputs wrong?** `swaymsg -t get_outputs` shows names; edit `kanshi/.config/kanshi/config`.
+- **No bar?** Run `waybar` in a terminal to see errors.
