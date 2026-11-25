@@ -28,6 +28,9 @@ map("n", "gi",               pick("lsp_implementations"),    "Implementations")
 map("n", "<leader>z", function() Snacks.zen() end,      "Toggle zen mode")
 map("n", "<leader>Z", function() Snacks.zen.zoom() end, "Toggle zoom")
 
+-- go docs (godoc.nvim, snacks picker)
+map("n", "<leader>gd", "<CMD>GoDoc<CR>", "Go docs")
+
 -- go: run tests/build in a split terminal
 local term = function(cmd)
   return function() vim.cmd("split | terminal " .. cmd) end

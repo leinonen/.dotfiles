@@ -8,6 +8,16 @@ vim.env.GIT_CONFIG_COUNT = "1"
 vim.env.GIT_CONFIG_KEY_0 = "url.https://pkg.leinonen.ninja/git/github.com/.insteadOf"
 vim.env.GIT_CONFIG_VALUE_0 = "https://github.com/"
 
+-- godoc.nvim: (re)install stdsym for symbol search. Must precede vim.pack.add.
+vim.api.nvim_create_autocmd("PackChanged", {
+  callback = function(ev)
+    local d = ev.data
+    if d.spec.name == "godoc.nvim" and (d.kind == "install" or d.kind == "update") then
+      vim.system({ "go", "install", "github.com/lotusirous/gostdsym/stdsym@latest" }):wait()
+    end
+  end,
+})
+
 vim.pack.add({
   { src = "https://github.com/leinonen/acidburn" },
   { src = "https://github.com/leinonen/ef-dream.nvim" },
@@ -19,6 +29,7 @@ vim.pack.add({
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
   { src = "https://github.com/maxandron/goplements.nvim" },
   { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
+  { src = "https://github.com/fredrikaverpil/godoc.nvim", version = vim.version.range("*") },
   -- { src = "https://github.com/mfussenegger/nvim-dap" },
   { src = "https://github.com/iamcco/markdown-preview.nvim" },
   -- svelte syntax; vim-svelte needs html5.vim and vim-javascript
@@ -35,5 +46,6 @@ require("plugins.icons")
 require("plugins.blink")
 require("plugins.goplements")
 require("plugins.tiny-inline-diagnostic")
+require("plugins.godoc")
 -- require("plugins.dap")
 require("plugins.markdown-preview")
