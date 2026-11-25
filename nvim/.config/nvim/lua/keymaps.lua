@@ -31,6 +31,19 @@ map("n", "<leader>Z", function() Snacks.zen.zoom() end, "Toggle zoom")
 -- go docs (godoc.nvim, snacks picker)
 map("n", "<leader>gd", "<CMD>GoDoc<CR>", "Go docs")
 
+-- go: toggle between foo.go and foo_test.go (only if the other file exists)
+map("n", "<leader>gt", function()
+  if vim.bo.filetype ~= "go" then return end
+  local file = vim.api.nvim_buf_get_name(0)
+  local alt = file:match("_test%.go$") and file:gsub("_test%.go$", ".go")
+    or file:gsub("%.go$", "_test.go")
+  if vim.uv.fs_stat(alt) then
+    vim.cmd.edit(vim.fn.fnameescape(alt))
+  else
+    vim.notify("No file: " .. vim.fn.fnamemodify(alt, ":~:."), vim.log.levels.WARN)
+  end
+end, "Go: toggle test file")
+
 -- go: run tests/build in a split terminal
 local term = function(cmd)
   return function() vim.cmd("split | terminal " .. cmd) end
