@@ -1,24 +1,33 @@
 #!/bin/bash
 # Build tree-sitter parsers for nvim without nvim-treesitter.
 # Usage: nvim-ts-parser <lang> [git-ref]    e.g. nvim-ts-parser go v0.25.0
-# Clones github.com/tree-sitter/tree-sitter-<lang>, compiles with cc, and
-# installs to ~/.local/share/nvim/site/parser/<lang>.so.
+# Clones github.com/tree-sitter/tree-sitter-<lang> (override with TS_REPO),
+# compiles with cc, and installs to ~/.local/share/nvim/site/parser/<lang>.so.
+# The grammar's queries/*.scm (highlights etc.) go to site/queries/<lang>/.
 set -euo pipefail
 
 lang=${1:?usage: nvim-ts-parser <lang> [git-ref]}
 ref=${2:-}
 repo=${TS_REPO:-https://github.com/tree-sitter/tree-sitter-$lang}
-dest=${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/parser
+site=${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-git clone -q --depth 1 ${ref:+--branch "$ref"} "$repo" "$tmp/src"
+git -c advice.detachedHead=false clone -q --depth 1 ${ref:+--branch "$ref"} "$repo" "$tmp/src"
 
 src=$tmp/src/src
 files=("$src/parser.c")
 [ -f "$src/scanner.c" ] && files+=("$src/scanner.c")
 
-mkdir -p "$dest"
-cc -O2 -shared -fPIC -I"$src" "${files[@]}" -o "$dest/$lang.so"
-echo "installed $dest/$lang.so"
+mkdir -p "$site/parser"
+cc -O2 -shared -fPIC -I"$src" "${files[@]}" -o "$site/parser/$lang.so"
+echo "installed $site/parser/$lang.so"
+
+shopt -s nullglob
+queries=("$tmp/src/queries"/*.scm)
+if [ ${#queries[@]} -gt 0 ]; then
+  mkdir -p "$site/queries/$lang"
+  cp "${queries[@]}" "$site/queries/$lang/"
+  echo "installed queries: ${queries[*]##*/} -> $site/queries/$lang/"
+fi
