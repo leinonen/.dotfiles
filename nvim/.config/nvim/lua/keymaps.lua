@@ -4,15 +4,7 @@ local map = function(mode, lhs, rhs, desc)
   vim.keymap.set(mode, lhs, rhs, { desc = desc })
 end
 
--- completion menu: Tab/S-Tab cycle, Enter accepts selected item
-local pum = function(yes, no)
-  return function() return vim.fn.pumvisible() == 1 and yes or no end
-end
-vim.keymap.set("i", "<Tab>",   pum("<C-n>", "<Tab>"),   { expr = true })
-vim.keymap.set("i", "<S-Tab>", pum("<C-p>", "<S-Tab>"), { expr = true })
-vim.keymap.set("i", "<CR>", function()
-  return vim.fn.complete_info({ "selected" }).selected ~= -1 and "<C-y>" or "<CR>"
-end, { expr = true })
+-- completion keymaps live in lua/plugins/blink.lua
 
 -- files
 map("n", "-", "<CMD>Oil<CR>", "Open parent directory")

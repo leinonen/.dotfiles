@@ -90,10 +90,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf })
     end
 
-    vim.lsp.completion.enable(true, ev.data.client_id, ev.buf, { autotrigger = true })
-
-    map("i", "<C-Space>", "<C-x><C-o>")
-    map("i", "<C-e>",     "<C-x><C-z>")
     map("n", "gd",         b.definition)
     map("n", "K",          b.hover)
     map("n", "<leader>rn", b.rename)

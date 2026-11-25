@@ -15,6 +15,7 @@ vim.pack.add({
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/stevearc/oil.nvim" },
   { src = "https://github.com/nvim-mini/mini.icons" },
+  { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
   -- { src = "https://github.com/mfussenegger/nvim-dap" },
   { src = "https://github.com/iamcco/markdown-preview.nvim" },
   -- svelte syntax; vim-svelte needs html5.vim and vim-javascript
@@ -28,5 +29,6 @@ require("plugins.snacks")
 require("plugins.gitsigns")
 require("plugins.oil")
 require("plugins.icons")
+require("plugins.blink")
 -- require("plugins.dap")
 require("plugins.markdown-preview")

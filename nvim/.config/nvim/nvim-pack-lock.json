@@ -4,6 +4,11 @@
       "rev": "d9b98480a57146be508b5a8edff5757c6735c99d",
       "src": "https://github.com/leinonen/acidburn"
     },
+    "blink.cmp": {
+      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "1.0.0 - 2.0.0"
+    },
     "c64.nvim": {
       "rev": "4b20e1f89b77e96cb8977165f9dd0f5c66611ccf",
       "src": "file:///home/leinonen/code/c64.nvim"
