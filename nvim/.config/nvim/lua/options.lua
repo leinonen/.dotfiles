@@ -24,6 +24,6 @@ o.wrap       = false
 o.linebreak  = false
 o.ignorecase = true
 o.smartcase  = true
-o.updatetime = 300 -- CursorHold delay (diagnostic float)
+o.updatetime = 300
 o.clipboard  = "unnamedplus"
 o.completeopt = { "menu", "menuone", "noselect", "fuzzy" }

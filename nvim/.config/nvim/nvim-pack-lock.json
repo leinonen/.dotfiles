@@ -53,6 +53,10 @@
       "rev": "882c996cf28183f4d63640de0b4c02ec886d01f2",
       "src": "https://github.com/folke/snacks.nvim"
     },
+    "tiny-inline-diagnostic.nvim": {
+      "rev": "43ff39303869f3aa0fcdeb625872ba89eab68e69",
+      "src": "https://github.com/rachartier/tiny-inline-diagnostic.nvim"
+    },
     "vim-javascript": {
       "rev": "b26c9edb3563e02f5c0b20580f7cf9743e95b157",
       "src": "https://github.com/pangloss/vim-javascript"
