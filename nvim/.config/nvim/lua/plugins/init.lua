@@ -10,6 +10,7 @@ vim.env.GIT_CONFIG_VALUE_0 = "https://github.com/"
 
 vim.pack.add({
   { src = "https://github.com/leinonen/acidburn" },
+  { src = "https://github.com/leinonen/ef-dream.nvim" },
   { src = "file:///home/leinonen/code/c64.nvim" },
   { src = "https://github.com/folke/snacks.nvim" },
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
