@@ -50,12 +50,44 @@ local term = function(cmd)
 end
 
 map("n", "<leader>tr", term("go run ./..."),         "go run")
-map("n", "<leader>tt", term("go test ./..."),        "go test")
+map("n", "<leader>tl", term("go test ./..."),        "go test")
 map("n", "<leader>tv", term("go test -v ./..."),     "go test -v")
 map("n", "<leader>tc", term("go test -cover ./..."), "go test -cover")
-map("n", "<leader>tl", function()
-  term("go test -run " .. vim.fn.expand("<cword>") .. " ./...")()
-end, "go test func under cursor")
+
+-- name of the Test/Benchmark/Fuzz/Example func enclosing the cursor
+local go_test_name = function()
+  -- go buffers don't run treesitter highlighting, so parse on demand
+  vim.treesitter.get_parser(0, "go"):parse()
+  local node = vim.treesitter.get_node({ lang = "go" })
+  while node do
+    if node:type() == "function_declaration" then
+      local name = vim.treesitter.get_node_text(node:field("name")[1], 0)
+      if name:match("^Test") or name:match("^Benchmark")
+        or name:match("^Fuzz") or name:match("^Example") then
+        return name
+      end
+    end
+    node = node:parent()
+  end
+end
+
+-- run only that test, in the file's package, in a floating snacks terminal
+map("n", "<leader>tt", function()
+  if vim.bo.filetype ~= "go" then return end
+  local name = go_test_name()
+  if not name then
+    return vim.notify("Cursor is not inside a test function", vim.log.levels.WARN)
+  end
+  local pat = "^" .. name .. "$"
+  local cmd = name:match("^Benchmark")
+    and { "go", "test", "-v", "-run", "^$", "-bench", pat, "." }
+    or { "go", "test", "-v", "-run", pat, "." }
+  Snacks.terminal.open(cmd, {
+    cwd = vim.fn.expand("%:p:h"),
+    interactive = false, -- keep output open; q closes
+    win = { position = "float" },
+  })
+end, "go test func under cursor (float)")
 
 -- debugger (nvim-dap)
 -- local dap = function(name)
