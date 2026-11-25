@@ -14,7 +14,7 @@
       "src": "file:///home/leinonen/code/c64.nvim"
     },
     "ef-dream.nvim": {
-      "rev": "e8821f9af8d1032c0dbbb6a949eb37c8714f0585",
+      "rev": "72c7f0fb3131177892398d02ff21ba37cee7f0ff",
       "src": "https://github.com/leinonen/ef-dream.nvim"
     },
     "gitsigns.nvim": {
