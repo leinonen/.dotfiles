@@ -19,7 +19,6 @@ vim.pack.add({
   { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.*") },
   { src = "https://github.com/maxandron/goplements.nvim" },
   { src = "https://github.com/rachartier/tiny-inline-diagnostic.nvim" },
-  { src = "https://github.com/kosayoda/nvim-lightbulb" },
   -- { src = "https://github.com/mfussenegger/nvim-dap" },
   { src = "https://github.com/iamcco/markdown-preview.nvim" },
   -- svelte syntax; vim-svelte needs html5.vim and vim-javascript
@@ -36,6 +35,5 @@ require("plugins.icons")
 require("plugins.blink")
 require("plugins.goplements")
 require("plugins.tiny-inline-diagnostic")
-require("plugins.lightbulb")
 -- require("plugins.dap")
 require("plugins.markdown-preview")

@@ -49,10 +49,6 @@
       "rev": "531771530d4f82ad2d21e436e3cc052d68d7aebb",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
-    "nvim-lightbulb": {
-      "rev": "b8c08c5f3b1586dfcdd9f34d7d54fe6982e01ac9",
-      "src": "https://github.com/kosayoda/nvim-lightbulb"
-    },
     "oil.nvim": {
       "rev": "b73018b75affd13fa38e2fc94ef753b465f770d7",
       "src": "https://github.com/stevearc/oil.nvim"
