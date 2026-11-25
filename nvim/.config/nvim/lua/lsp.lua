@@ -99,6 +99,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("n", "<F3>",       b.references)
     map("n", "<F4>",       b.document_symbol)
     map("n", "<F5>",       b.workspace_symbol)
+    map("n", "<leader>lr", "<cmd>lsp restart<cr>")
     map("n", "<leader>f",  function()
       b.format({ async = true, filter = function(c) return c.name ~= "tsgo" and c.name ~= "cssls" end })
     end)

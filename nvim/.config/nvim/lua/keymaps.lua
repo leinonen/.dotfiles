@@ -55,3 +55,7 @@ end, "go test func under cursor")
 
 -- markdown
 map("n", "<leader>mp", "<Plug>MarkdownPreviewToggle", "Toggle Markdown preview")
+
+-- disable macro recording
+map("n", "q", "<Nop>")
+
