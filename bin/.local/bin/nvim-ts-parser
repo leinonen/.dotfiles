@@ -1,0 +1,24 @@
+#!/bin/bash
+# Build tree-sitter parsers for nvim without nvim-treesitter.
+# Usage: nvim-ts-parser <lang> [git-ref]    e.g. nvim-ts-parser go v0.25.0
+# Clones github.com/tree-sitter/tree-sitter-<lang>, compiles with cc, and
+# installs to ~/.local/share/nvim/site/parser/<lang>.so.
+set -euo pipefail
+
+lang=${1:?usage: nvim-ts-parser <lang> [git-ref]}
+ref=${2:-}
+repo=${TS_REPO:-https://github.com/tree-sitter/tree-sitter-$lang}
+dest=${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/parser
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+git clone -q --depth 1 ${ref:+--branch "$ref"} "$repo" "$tmp/src"
+
+src=$tmp/src/src
+files=("$src/parser.c")
+[ -f "$src/scanner.c" ] && files+=("$src/scanner.c")
+
+mkdir -p "$dest"
+cc -O2 -shared -fPIC -I"$src" "${files[@]}" -o "$dest/$lang.so"
+echo "installed $dest/$lang.so"
