@@ -17,6 +17,10 @@
       "rev": "25050e4ed39e628282831d4cbecb1850454ce915",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "goplements.nvim": {
+      "rev": "1750ace64d42efcbc1ce36eef848a3cea5f88c79",
+      "src": "https://github.com/maxandron/goplements.nvim"
+    },
     "html5.vim": {
       "rev": "485f2cd62162c81e56d8604b4c630f0b5ef69d1f",
       "src": "https://github.com/othree/html5.vim"
